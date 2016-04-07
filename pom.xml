@@ -9,7 +9,7 @@
     <artifactId>arenx.foodie.appengine</artifactId>
 
     <properties>
-        <app.id>your-app-id</app.id>
+        <app.id>net-arenx-foodie</app.id>
         <app.version>1</app.version>
         <appengine.version>1.9.34</appengine.version>
         <gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
@@ -125,6 +125,9 @@
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
                     <version>${app.version}</version>
+                    <appId>${app.id}</appId>
+                    <address>0.0.0.0</address>
+                    <port>8080</port>
                     <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
                     <!-- address>0.0.0.0</address>
                     <port>8080</port -->
