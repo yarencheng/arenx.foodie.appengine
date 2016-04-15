@@ -10,7 +10,7 @@ import javax.jdo.Query;
 
 import com.google.appengine.api.users.User;
 
-import net.arenx.api.v1.UserBean;
+import net.arenx.api.bean.UserBean;
 import net.arenx.jdo.UserJDO;
 
 public class UserManager {

@@ -11,8 +11,8 @@ import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.GeoPt;
 
-import net.arenx.api.v1.LocationBean;
-import net.arenx.api.v1.PositionBean;
+import net.arenx.api.bean.LocationBean;
+import net.arenx.api.bean.PositionBean;
 import net.arenx.jdo.LikeLocationJDO;
 import net.arenx.jdo.LocationJDO;
 import net.arenx.jdo.UserJDO;

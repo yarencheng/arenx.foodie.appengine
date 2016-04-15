@@ -9,9 +9,9 @@ import javax.jdo.annotations.Persistent;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
+import net.arenx.api.bean.LocationBean;
+import net.arenx.api.bean.PositionBean;
 import net.arenx.api.v1.LocationApi;
-import net.arenx.api.v1.LocationBean;
-import net.arenx.api.v1.PositionBean;
 
 @PersistenceCapable(table="location")
 public class LocationJDO extends BaseJDO{

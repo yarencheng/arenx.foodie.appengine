@@ -11,7 +11,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import net.arenx.api.v1.BaseBean;
+import net.arenx.api.bean.IdBean;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -33,7 +33,7 @@ public class BaseJDO {
 		return createDate;
 	}
 
-	public <T extends BaseBean> T toBean(Class<T> clazz){
+	public <T extends IdBean> T toBean(Class<T> clazz){
 		checkNotNull(clazz);
 		
 		T t = null;

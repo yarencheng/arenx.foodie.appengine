@@ -7,7 +7,7 @@ import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.datanucleus.annotations.Unowned;
 
-import net.arenx.api.v1.PhotoBean;
+import net.arenx.api.bean.PhotoBean;
 
 @PersistenceCapable(table="photo")
 public class PhotoJDO extends BaseJDO{

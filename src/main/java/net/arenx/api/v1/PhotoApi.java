@@ -15,6 +15,8 @@ import net.arenx.Constants;
 import net.arenx.LocationManager;
 import net.arenx.PhotoManager;
 import net.arenx.UserManager;
+import net.arenx.api.bean.PhotoBean;
+import net.arenx.api.bean.UserBean;
 import net.arenx.jdo.LocationJDO;
 import net.arenx.jdo.PhotoJDO;
 import net.arenx.jdo.UserJDO;

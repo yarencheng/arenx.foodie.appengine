@@ -10,10 +10,10 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import net.arenx.api.bean.LocationBean;
+import net.arenx.api.bean.PhotoBean;
+import net.arenx.api.bean.UserBean;
 import net.arenx.api.v1.LocationApi;
-import net.arenx.api.v1.LocationBean;
-import net.arenx.api.v1.PhotoBean;
-import net.arenx.api.v1.UserBean;
 import net.arenx.jdo.LikePhotoJDO;
 import net.arenx.jdo.LocationJDO;
 import net.arenx.jdo.PhotoJDO;

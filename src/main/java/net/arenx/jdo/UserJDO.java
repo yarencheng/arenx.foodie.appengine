@@ -3,7 +3,7 @@ package net.arenx.jdo;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import net.arenx.api.v1.UserBean;
+import net.arenx.api.bean.UserBean;
 
 @PersistenceCapable(table="user")
 public class UserJDO extends BaseJDO{
