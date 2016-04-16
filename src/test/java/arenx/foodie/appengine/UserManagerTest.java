@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.users.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
@@ -75,6 +76,14 @@ public class UserManagerTest {
 		assertEquals(eUserjdo.getEmail(), eEmail);
 		assertTrue(start.getTime() <= eUserjdo.getCreateDate().getTime() && eUserjdo.getCreateDate().getTime() <= end.getTime());
 		assertEquals(eUserjdo.getId(), aUser.getId());
+		
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		com.google.appengine.api.datastore.Query q1 = new com.google.appengine.api.datastore.Query("user");
+		PreparedQuery pq = ds.prepare(q1);
+		assertEquals(1, pq.countEntities());
+		Entity result = pq.asSingleEntity();
+		assertEquals(eEmail, result.getProperty("email"));
+		assertEquals(eid, result.getProperty("appengine_id"));
 	}
 	
 	@Test
