@@ -64,7 +64,7 @@ public class UserManager {
 		checkNotNull(id);
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(0);
+		pm.getFetchPlan().setMaxFetchDepth(1);
 		
 		try{
 			pm.getObjectById(UserJDO.class, id);

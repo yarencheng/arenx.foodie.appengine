@@ -1,4 +1,4 @@
-package arenx.foodie.appengine;
+package arenx.foodie.appengine.helloworld;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
