@@ -1,5 +1,6 @@
 package net.arenx;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
@@ -10,10 +11,7 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import net.arenx.api.bean.LocationBean;
 import net.arenx.api.bean.PhotoBean;
-import net.arenx.api.bean.UserBean;
-import net.arenx.api.v1.LocationApi;
 import net.arenx.jdo.LikePhotoJDO;
 import net.arenx.jdo.LocationJDO;
 import net.arenx.jdo.PhotoJDO;
@@ -36,6 +34,9 @@ public class PhotoManager {
 	public PhotoBean add(Long userId, Long locationId, String description){
 		checkNotNull(userId);
 		checkNotNull(locationId);
+		if (null != description) {
+			checkArgument(1000 >= description.length());
+		}
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		PhotoJDO photo = new PhotoJDO();
@@ -81,15 +82,15 @@ public class PhotoManager {
 		}
 	}
 
-	public List<PhotoBean> get(LocationJDO location){
-		checkNotNull(location);
+	public List<PhotoBean> getallFromLocation(Long id){
+		checkNotNull(id);
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	
 		try {
 			Query q = pm.newQuery(PhotoJDO.class, "location == locationParam");
-			q.declareParameters(PhotoJDO.class.getName()+" locationParam");
-			List<PhotoJDO> photos = (List<PhotoJDO>) q.execute(location);
+			q.declareParameters(Long.class.getName()+" locationParam");
+			List<PhotoJDO> photos = (List<PhotoJDO>) q.execute(id);
 			List<PhotoBean> photoBeans = new ArrayList<PhotoBean>();
 			for (PhotoJDO p:photos){
 				photoBeans.add(p.toBean());
@@ -113,6 +114,8 @@ public class PhotoManager {
 		checkNotNull(photoId);
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(1);
+
 		try{
 			Query q = pm.newQuery(LikePhotoJDO.class, "user == userParam && photo == photoParam");
 			q.declareParameters(Long.class.getName()+" userParam, "+Long.class.getName()+" photoParam");
@@ -141,11 +144,7 @@ public class PhotoManager {
 				}
 				like.setPhoto(pj);
 			}
-			
-			if (null != like.isLike() && like.isLike() == isLike) {
-				return;
-			}
-						
+									
 			like.setLike(isLike);
 			pm.makePersistent(like);
 			
