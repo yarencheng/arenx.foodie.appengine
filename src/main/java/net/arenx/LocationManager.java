@@ -139,10 +139,6 @@ public class LocationManager {
 				}
 				like.setLocation(lj);
 			}
-			
-			if (null != like.isLike() && like.isLike() == isLike) {
-				return;
-			}
 
 			like.setLike(isLike);
 			pm.makePersistent(like);

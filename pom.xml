@@ -129,11 +129,6 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-			</plugin>
 		</plugins>
 	</reporting>
 
@@ -264,7 +259,7 @@
 				<version>2.7</version>
 				<configuration>
 					<check>
-						<haltOnFailure>true</haltOnFailure>
+						<haltOnFailure>false</haltOnFailure>
 						<branchRate>90</branchRate>
 						<lineRate>90</lineRate>
 						<totalBranchRate>90</totalBranchRate>
