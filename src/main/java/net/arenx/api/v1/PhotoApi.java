@@ -7,6 +7,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
@@ -29,11 +30,14 @@ public class PhotoApi{
 	
 	@ApiMethod(
 			scopes={Constants.EMAIL_SCOPE},
-			clientIds={
+			clientIds = {
+					"755058913802-g2atj31r9k53k9mnkg8e4qsjppj6vj23.apps.googleusercontent.com",
 					com.google.api.server.spi.Constant.API_EXPLORER_CLIENT_ID
-					}
+					},
+			httpMethod = HttpMethod.POST,
+			path = "add/{location_id}"
 			)
-	public void add(
+	public PhotoBean add(
 			User user,
 			@Named("location_id") Long location_id,
 			@Nullable @Named("description") String description
@@ -46,7 +50,8 @@ public class PhotoApi{
 		UserManager um=UserManager.instance();
 		UserBean ub = um.get(user);
 		
-		pm.add(ub.getId(), location_id, description);
+		PhotoBean photo = pm.add(ub.getId(), location_id, description);
+		return photo;
 	}
 	
 	@ApiMethod(

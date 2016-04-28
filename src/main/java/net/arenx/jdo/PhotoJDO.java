@@ -5,6 +5,10 @@ import java.util.logging.Logger;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
 import net.arenx.api.bean.PhotoBean;
@@ -13,9 +17,17 @@ import net.arenx.api.bean.PhotoBean;
 public class PhotoJDO extends BaseJDO{
 	
 	private static final Logger log = Logger.getLogger(PhotoJDO.class.getName());
+	
+	private ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
 	@Persistent(column="description")
 	private String description;
+	
+	@Persistent(column="url")
+	private String url;
+	
+	@Persistent(column="blob_key")
+	private BlobKey blobKey;
 	
 	@Persistent(column="location_id",defaultFetchGroup="true")
 	@Unowned
@@ -32,6 +44,22 @@ public class PhotoJDO extends BaseJDO{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public BlobKey getBlobKey() {
+		return blobKey;
+	}
+
+	public void setBlobKey(BlobKey blobKey) {
+		this.blobKey = blobKey;
 	}
 
 	public LocationJDO getLocation() {
@@ -54,6 +82,7 @@ public class PhotoJDO extends BaseJDO{
 		PhotoBean bean = super.toBean(PhotoBean.class);
 				
 		bean.setDescription(description);
+		if (null != blobKey)bean.setUrl(imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKey)));
 		if (null != location)bean.setLocation(location.toBean());
 		if (null != user)bean.setUser(user.toBean());
 		

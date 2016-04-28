@@ -8,7 +8,7 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 
 public class PhotoBean extends IdBean{
 	
-	@ApiResourceProperty(name="name")
+	@ApiResourceProperty(name="description")
 	private String description;
 	
 	@ApiResourceProperty(name="location")
@@ -16,6 +16,12 @@ public class PhotoBean extends IdBean{
 	
 	@ApiResourceProperty(name="user")
 	private UserBean user;
+	
+	@ApiResourceProperty(name="upload_url")
+	private String uploadUrl;
+	
+	@ApiResourceProperty(name="url")
+	private String url;
 	
 	public PhotoBean() {
 
@@ -27,6 +33,22 @@ public class PhotoBean extends IdBean{
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException("Failed to copy property", e);
 		}
+	}
+
+	public String getUploadUrl() {
+		return uploadUrl;
+	}
+
+	public void setUploadUrl(String uploadUrl) {
+		this.uploadUrl = uploadUrl;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getDescription() {

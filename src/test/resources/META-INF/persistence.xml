@@ -15,6 +15,7 @@
 			
 			<!-- Don not use cache to keep data consistent between PersistMansger(datanucleus) and DatastoreService(appengine)-->
 			<property name="javax.jdo.option.IgnoreCache" value="true" />
+			<property name="datanucleus.cache.level1.type" value="none" />
 			<property name="datanucleus.cache.level2.type" value="none" />
 		</properties>
 	</persistence-unit>

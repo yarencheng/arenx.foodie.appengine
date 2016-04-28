@@ -9,6 +9,7 @@ import javax.jdo.Query;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -130,4 +131,6 @@ public class LocationApi {
 
 		lm.dislike(userBean.getId(), id);
 	}
+	
+	
 }

@@ -52,7 +52,7 @@ public class HelloWorldTest {
 		Key k2 = KeyFactory.createKey("test", "222");
 		Entity e2 = new Entity(k2);
 		e2.setProperty("value", "sdasdasdasda");
-		ds..put(e2);
+		ds.put(e2);
 		
 		Query q = new Query("test");
 
@@ -67,6 +67,6 @@ public class HelloWorldTest {
 			System.out.println("value="+result.getProperty("value"));
 		}
 		
-		fail();
+		//fail();
 	}
 }

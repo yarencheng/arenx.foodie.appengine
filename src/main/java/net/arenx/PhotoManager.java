@@ -11,6 +11,13 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
+
 import net.arenx.api.bean.PhotoBean;
 import net.arenx.jdo.LikePhotoJDO;
 import net.arenx.jdo.LocationJDO;
@@ -20,8 +27,10 @@ import net.arenx.jdo.UserJDO;
 public class PhotoManager {
 	
 	private static final Logger log = Logger.getLogger(PhotoManager.class.getName());
-
 	private static final PhotoManager instance = new PhotoManager();
+	
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
 	public static PhotoManager instance() {
 		return instance;
@@ -58,13 +67,19 @@ public class PhotoManager {
 			throw new IllegalArgumentException("no such user", e);
 		}
 		photo.setUser(user);
-	
+
+		PhotoBean photoBean;
 		try {
 			pm.makePersistent(photo);
-			return photo.toBean();
+			photoBean = photo.toBean();
 		} finally {
 			pm.close();
 		}
+		
+		String blobUploadUrl = blobstoreService.createUploadUrl("/add_photo_callback?id="+photoBean.getId());
+		photoBean.setUploadUrl(blobUploadUrl);
+		
+		return photoBean;
 	}
 
 	public PhotoBean get(Long id){
@@ -77,6 +92,22 @@ public class PhotoManager {
 			return photo.toBean();
 		} catch (JDOObjectNotFoundException e) {
 			return null;
+		}finally {
+			pm.close();
+		}
+	}
+	
+	public void setBlob(Long id, BlobKey blob){
+		checkNotNull(id);
+		checkNotNull(blob);
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			PhotoJDO photo = pm.getObjectById(PhotoJDO.class,id);
+			photo.setBlobKey(blob);
+			pm.makePersistent(photo);
+		} catch (JDOObjectNotFoundException e) {
+			throw new IllegalArgumentException("no such photo");
 		}finally {
 			pm.close();
 		}
